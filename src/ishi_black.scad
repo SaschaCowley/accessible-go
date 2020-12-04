@@ -1,3 +1,4 @@
+use <components.scad>
 $fa = 1;
 $fs = 0.4;
 
@@ -8,14 +9,4 @@ peg_h = 15;
 bump_r = 2;
 bump_h = 1;
 
-union() {
-  resize([stone_r*2, stone_r*2, stone_h])
-  sphere(r=stone_r);
-
-  translate([0, 0, -(peg_h + stone_h/2)/2])
-  cylinder(h=peg_h + stone_h/2, r=peg_r, center=true);
-
-  translate([0, 0, stone_h/2])
-  resize([2*bump_r, 2*bump_r, 2*bump_h])
-  sphere(r=bump_r);
-}
+ishi(stone_r, stone_h, peg_r, peg_h, bump_r, bump_h);

@@ -12,3 +12,17 @@ module grid(x, y, spacing_x, spacing_y, line) {
     cylinder(h=width, r=line/2, center=true);
   }
 }
+
+module ishi(stone_rxy, stone_rz, peg_r, peg_h, bump_rxy, bump_rz) {
+  union() {
+    resize([stone_rxy*2, stone_rxy*2, stone_rz*2])
+    sphere(r=stone_rxy);
+
+    translate([0, 0, -(peg_h + stone_rz)/2])
+    cylinder(h=peg_h + stone_rz, r=peg_r, center=true);
+
+    translate([0, 0, stone_rz])
+    resize([2*bump_rxy, 2*bump_rxy, 2*bump_rz])
+    sphere(r=bump_rxy);
+  }
+}
