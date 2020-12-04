@@ -34,9 +34,7 @@ module grid(x, y, spacing_x, spacing_y, line) {
 
 difference() {
   union() {
-    color("darkslategray")
     roundedBox([((grid_x - 1) * grid_spacing_x) + (grid_x * line_thickness) + (2 * margin_x), ((grid_y - 1) * grid_spacing_y) + (grid_y * line_thickness) + (2 * margin_y), board_depth], board_r);
-    color("lightgray")
     translate([0, 0, board_depth / 2])
     scale([1, 1, 2])
     grid(grid_x, grid_y, grid_spacing_x, grid_spacing_y, line_thickness);

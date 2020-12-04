@@ -8,7 +8,6 @@ peg_h = 15;
 bump_r = 0;
 bump_h = 0;
 
-color("white")
 union() {
   resize([stone_r*2, stone_r*2, stone_h])
   sphere(r=stone_r);
