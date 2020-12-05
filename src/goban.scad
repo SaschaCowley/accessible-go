@@ -1,19 +1,6 @@
 use <MCAD/boxes.scad>
 use <components.scad>
-$fa = 1;
-$fs = 0.4;
-
-board_depth = 20;
-board_r = 3;
-grid_x = 9;
-grid_y = 9;
-grid_spacing_x = 25;
-grid_spacing_y = 25;
-line_thickness = 1.5;
-margin_x = 10;
-margin_y = 10;
-peg_h = 16;
-peg_r = 4;
+include <config.scad>
 
 difference() {
   union() {
@@ -28,7 +15,7 @@ difference() {
   for(i = [0:grid_x-1]) {
     for(j = [0:grid_y-1]) {
       translate([(-width / 2) + (i * (grid_spacing_x + line_thickness)) + line_thickness/2, (-height / 2) + (j * (grid_spacing_y + line_thickness)) + line_thickness/2, ((board_depth / 2) + line_thickness) - (peg_h / 2) + 0.001])
-      cylinder(h=peg_h, r=peg_r, center=true);
+      cylinder(h=peg_h, r=peg_r + hole_tolerance, center=true);
     }
   } 
 }
