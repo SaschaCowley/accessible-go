@@ -1,5 +1,5 @@
 use <MCAD/boxes.scad>
-use <components.scad>
+use <common.scad>
 include <config.scad>
 
 difference() {
