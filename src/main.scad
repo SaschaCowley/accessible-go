@@ -1,6 +1,4 @@
-//include <BOSL/constants.scad>
-//use <BOSL/shapes.scad>
-//use <BOSL/transforms.scad>
+include<geometry.scad>
 use <grid.scad>
 
 /* [Tolerances] */
@@ -40,8 +38,8 @@ BLIND_D = 1.8;
 BLIND_H = 12.0;
 
 /* [Board] */
-GRID_X = 3;
-GRID_Y = 3;
+// Size of grid (number of rows and columns)
+GRID_SIZE = 3; // [3, 9, 13, 19]
 SPACING_X = 25.0;
 SPACING_Y = 25.0;
 LINE_R = 1.0;
@@ -66,8 +64,8 @@ screws=[[0,0],[2,0],[0,2],[2,2]];
 
 
 grid(
-	grid_x=GRID_X,
-	grid_y=GRID_Y,
+	grid_x=GRID_SIZE,
+	grid_y=GRID_SIZE,
 	spacing_x=SPACING_X,
 	spacing_y=SPACING_Y,
 	line_r=LINE_R,
@@ -77,7 +75,7 @@ grid(
 	blind_id=BLIND_D,
 	blind_od=MAG_ID-CLEARANCE_SNUG,
 	blind_h=BLIND_H,
-	hoshi=hoshi,
-	screws=screws,
+	hoshi=hoshi(GRID_SIZE),
+	screws=screws(GRID_SIZE),
 	eps=EPS
 );
