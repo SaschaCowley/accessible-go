@@ -45,41 +45,29 @@ SCREWS = [
 	]]
 ];
 
-module grid(grid_x, grid_y, spacing_x, spacing_y, r, screw_size, screw_hd, screw_hh, eps) {
-	l = grid_y * spacing_y;
-	w = grid_x * spacing_x;
-	difference() {
+module grid(grid_x, grid_y, spacing_x, spacing_y, line_r, screw_size, screw_hh, screw_hd, blind_id, blind_od, blind_h, hoshi, screws, eps) {
+	w = (grid_x-1)*spacing_x;
+	h = (grid_y-1)*spacing_y;
+	difference(){
 		union() {
-			// Horizontal gridlines
-			yspread(spacing = spacing_y, n=grid_y)
-			xcyl(
-				l = spacing_x * grid_x,
-				r = r,
-				align=V_RIGHT,
-			);
-			// Vertical gridlines
-			xspread(spacing=spacing_x, n=grid_x)
-			ycyl(
-				l = spacing_y * grid_y,
-				r = r,
-				align=V_BACK,
-			);
-			// Points
-			grid2d(size=[grid_x, grid_y], spacing=[spacing_x, spacing_y], cols=grid_x, rows=grid_y)
-			cyl(
-				h = 2*r,
-				d = screw_hd + 2*r,
-				fillet = r,
-			);
+			top_half() {
+				// Horizontal gridlines
+				yspread(spacing=spacing_y, n=grid_y)
+				xcyl(l=w, r=line_r);
+				// Vertical gridlines
+				xspread(spacing=spacing_x, n=grid_x)
+				ycyl(l=h, r=line_r);
+				// Intersections
+				grid2d(spacing=[spacing_x, spacing_y], cols=grid_x, rows=grid_y)
+				cyl(h=line_r*2, fillet=line_r, d=screw_hd + 2*line_r);
+			}
+			// Blind holes for upward-facing fasteners
+			place_copies([for (c = screws) [c[0]*spacing_x - w/2, c[1]*spacing_y - h/2, eps]])
+			tube(od=blind_od, id=blind_id, h=blind_h+eps, align=V_BELOW);
 		}
-		// Countersinks
-		place_copies([[0,0,0], [w,0,0], [0,l,0], [w,l,0]])
-		up(r + eps)
-		cyl(
-			h = screw_hh,
-			d1 = screw_size,
-			d2 = screw_hd,
-			align = V_BOTTOM,
-		);
+		// Countersunk holes for downward facing fasteners at the star points
+		up(line_r+eps)
+		place_copies([for (c = hoshi) [c[0]*spacing_x - w/2, c[1]*spacing_y - h/2]])
+		cyl(d1=screw_size, d2=screw_hd, h=screw_hh, align=V_BELOW);
 	}
 }

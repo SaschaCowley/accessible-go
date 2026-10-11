@@ -1,3 +1,9 @@
+//include <BOSL/constants.scad>
+//use <BOSL/shapes.scad>
+//use <BOSL/transforms.scad>
+use <grid.scad>
+
+/* [Tolerances] */
 // Wall thickness
 WALL = 1.0;
 
@@ -27,13 +33,18 @@ SCREW_HH = 2.48;
 // Screw head diameter
 SCREW_HD = 8.96;
 
+// Diameter of blind hole for thread forming screw
+BLIND_D = 1.8;
+
+// Depth of hole for thread forming screw
+BLIND_H = 12.0;
 
 /* [Board] */
-grid_x = 3;
-grid_y = 3;
-spacing_x = 25.0;
-spacing_y = 25.0;
-line_r = 1.0;
+GRID_X = 3;
+GRID_Y = 3;
+SPACING_X = 25.0;
+SPACING_Y = 25.0;
+LINE_R = 1.0;
 
 /* [Stones] */
 // Diameter
@@ -50,3 +61,23 @@ ISHI_BH = 1.5;
 
 /* [Hidden] */
 EPS = 0.01;
+hoshi=[[1, 1]];
+screws=[[0,0],[2,0],[0,2],[2,2]];
+
+
+grid(
+	grid_x=GRID_X,
+	grid_y=GRID_Y,
+	spacing_x=SPACING_X,
+	spacing_y=SPACING_Y,
+	line_r=LINE_R,
+	screw_size=SCREW_SIZE,
+	screw_hh=SCREW_HH,
+	screw_hd=SCREW_HD,
+	blind_id=BLIND_D,
+	blind_od=MAG_ID-CLEARANCE_SNUG,
+	blind_h=BLIND_H,
+	hoshi=hoshi,
+	screws=screws,
+	eps=EPS
+);
